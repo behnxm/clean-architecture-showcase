@@ -37,12 +37,15 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference(options => options.WithTitle("Clean Architecture Product Catalog API"));
+}
 
-    // In development, apply EF Core migrations and seed products
+// In Development, or when configured via Database:ApplyMigrationsOnStartup, apply migrations and seed products
+bool applyMigrations = builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true);
+if (app.Environment.IsDevelopment() || applyMigrations)
+{
     using IServiceScope scope = app.Services.CreateScope();
     ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    bool applyMigrations = builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true);
     await DbInitializer.InitializeAsync(dbContext, applyMigrations, logger);
 }
 
