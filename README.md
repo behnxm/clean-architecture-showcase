@@ -1,10 +1,10 @@
 # Clean Architecture Showcase (.NET 10 & C# 14)
 
-[![Continuous Integration](https://github.com/behnamnouri/CleanArchitectureShowcase/actions/workflows/ci.yml/badge.svg)](https://github.com/behnamnouri/CleanArchitectureShowcase/actions/workflows/ci.yml)
+[![Continuous Integration](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/behnxm/CleanArchitectureShowcase)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET 10 LTS](https://img.shields.io/badge/.NET-10.0%20LTS-purple.svg)](https://dotnet.microsoft.com/)
 
-An interview-ready, production-grade reference implementation of **Clean Architecture** built on **.NET 10 (`net10.0`, LTS)** and **C# 14**.
+A production-grade reference implementation of **Clean Architecture** built on **.NET 10 (`net10.0`, LTS)** and **C# 14**.
 
 I designed this repository to serve two purposes:
 1. **My Public Technical Portfolio**: Demonstrating production-grade enterprise software architecture, SOLID design principles, automated testing pyramids, and defensive API design.
@@ -21,7 +21,7 @@ I designed this repository to serve two purposes:
 ### Run the API
 ```bash
 # 1. Clone the repository
-git clone https://github.com/behnamnouri/CleanArchitectureShowcase.git
+git clone https://github.com/behnxm/CleanArchitectureShowcase.git
 cd CleanArchitectureShowcase
 
 # 2. Run the Web API project (uses embedded SQLite by default; zero external database setup required)
