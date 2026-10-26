@@ -13,9 +13,11 @@
     <!--
       CA1716: Identifiers should not match keywords (flags 'Error' due to VB.NET keyword reservation; standard Result pattern domain model requires 'Error').
       CA1000: Do not declare static members on generic types (suppressed to allow C# 11+ static abstract members on generic Result<T> for zero-reflection pipeline failure creation).
+      CA1711: Identifiers should not have incorrect suffix (flags 'IDomainEventHandler' and 'RequestHandlerDelegate' due to legacy .NET event delegate conventions; standard CQRS and pipeline naming uses these suffixes).
       IDE0032: Use auto property (suppressed because Result<TValue>.Value getter enforces invariant check and throws on failure, necessitating a backing field).
       IDE0046: Convert if to conditional expression (suppressed for improved clarity and readability in guard clauses).
+      IDE0058: Expression value is never used (suppressed to permit standard fluent API method chaining in FluentValidation and DI registrations).
     -->
-    <NoWarn>$(NoWarn);CA1716;CA1000;IDE0032;IDE0046</NoWarn>
+    <NoWarn>$(NoWarn);CA1716;CA1000;CA1711;IDE0032;IDE0046;IDE0058</NoWarn>
   </PropertyGroup>
 </Project>
