@@ -171,7 +171,7 @@ sequenceDiagram
             DB-->>Handler: Saved 1 record
             Handler-->>Validation: Result<Guid>.Success(product.Id)
             Validation-->>Logging: Result<Guid>
-            Note over Logging: Measures elapsed time; logs warning if slow
+            Note over Logging: Measures elapsed time and logs warning if slow
             Logging-->>Controller: Result<Guid>
             Controller-->>Client: 201 Created (Location: /api/v1/products/{id})
         end
