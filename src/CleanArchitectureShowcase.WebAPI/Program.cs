@@ -33,7 +33,8 @@ WebApplication app = builder.Build();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
 
-if (app.Environment.IsDevelopment())
+bool enableOpenApi = app.Environment.IsDevelopment() || builder.Configuration.GetValue("OpenApi:Enabled", true);
+if (enableOpenApi)
 {
     app.MapOpenApi();
     app.MapScalarApiReference(options => options.WithTitle("Clean Architecture Product Catalog API"));

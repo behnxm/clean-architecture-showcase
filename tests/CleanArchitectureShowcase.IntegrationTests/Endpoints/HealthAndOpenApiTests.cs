@@ -82,4 +82,28 @@ public sealed class HealthAndOpenApiTests(CustomWebApplicationFactory factory) :
         distinctOperationIds.ShouldContain("AdjustProductStock");
         distinctOperationIds.ShouldContain("DeleteProduct");
     }
+
+    [Fact]
+    public async Task ScalarApiReference_ReturnsSuccessStatusCode()
+    {
+        // Act
+        HttpResponseMessage response = await _client.GetAsync("/scalar");
+
+        // Assert
+        response.IsSuccessStatusCode.ShouldBeTrue($"Failed with status {response.StatusCode}");
+        string content = await response.Content.ReadAsStringAsync();
+        content.ShouldContain("scalar");
+    }
+
+    [Fact]
+    public async Task ScalarApiReference_V1Route_ReturnsSuccessStatusCode()
+    {
+        // Act
+        HttpResponseMessage response = await _client.GetAsync("/scalar/v1");
+
+        // Assert
+        response.IsSuccessStatusCode.ShouldBeTrue($"Failed with status {response.StatusCode}");
+        string content = await response.Content.ReadAsStringAsync();
+        content.ShouldContain("scalar");
+    }
 }
