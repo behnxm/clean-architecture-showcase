@@ -10,5 +10,12 @@
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <WarningsAsErrors>$(WarningsAsErrors);NU1901;NU1902;NU1903;NU1904</WarningsAsErrors>
+    <!--
+      CA1716: Identifiers should not match keywords (flags 'Error' due to VB.NET keyword reservation; standard Result pattern domain model requires 'Error').
+      CA1000: Do not declare static members on generic types (suppressed to allow C# 11+ static abstract members on generic Result<T> for zero-reflection pipeline failure creation).
+      IDE0032: Use auto property (suppressed because Result<TValue>.Value getter enforces invariant check and throws on failure, necessitating a backing field).
+      IDE0046: Convert if to conditional expression (suppressed for improved clarity and readability in guard clauses).
+    -->
+    <NoWarn>$(NoWarn);CA1716;CA1000;IDE0032;IDE0046</NoWarn>
   </PropertyGroup>
 </Project>

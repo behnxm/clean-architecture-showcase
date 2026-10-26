@@ -62,3 +62,5 @@ dotnet_naming_style.private_field_style.required_prefix = _
 
 # Analyzer severity
 dotnet_analyzer_diagnostic.severity = warning
+dotnet_diagnostic.IDE0005.severity = suggestion
+
