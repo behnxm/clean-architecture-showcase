@@ -17,7 +17,8 @@
       IDE0032: Use auto property (suppressed because Result<TValue>.Value getter enforces invariant check and throws on failure, necessitating a backing field).
       IDE0046: Convert if to conditional expression (suppressed for improved clarity and readability in guard clauses).
       IDE0058: Expression value is never used (suppressed to permit standard fluent API method chaining in FluentValidation and DI registrations).
+      ASP0027: Redundant 'public partial class Program' declaration in .NET 10 (suppressed to satisfy explicit Program declaration for WebApplicationFactory<Program> in integration test assemblies).
     -->
-    <NoWarn>$(NoWarn);CA1716;CA1000;CA1711;IDE0032;IDE0046;IDE0058</NoWarn>
+    <NoWarn>$(NoWarn);CA1716;CA1000;CA1711;IDE0032;IDE0046;IDE0058;ASP0027</NoWarn>
   </PropertyGroup>
 </Project>
