@@ -45,15 +45,9 @@ public abstract class BaseEntity<TId> : IEquatable<BaseEntity<TId>>
     /// <summary>
     /// Clears all recorded domain events once they have been collected for dispatching.
     /// </summary>
-    public void ClearDomainEvents()
-    {
-        _domainEvents.Clear();
-    }
+    public void ClearDomainEvents() => _domainEvents.Clear();
 
-    public override bool Equals(object? obj)
-    {
-        return obj is BaseEntity<TId> other && Equals(other);
-    }
+    public override bool Equals(object? obj) => obj is BaseEntity<TId> other && Equals(other);
 
     public bool Equals(BaseEntity<TId>? other)
     {
@@ -65,10 +59,7 @@ public abstract class BaseEntity<TId> : IEquatable<BaseEntity<TId>>
         return ReferenceEquals(this, other) || (GetType() == other.GetType() && EqualityComparer<TId>.Default.Equals(Id, other.Id));
     }
 
-    public override int GetHashCode()
-    {
-        return EqualityComparer<TId>.Default.GetHashCode(Id);
-    }
+    public override int GetHashCode() => EqualityComparer<TId>.Default.GetHashCode(Id);
 
     public static bool operator ==(BaseEntity<TId>? left, BaseEntity<TId>? right)
     {

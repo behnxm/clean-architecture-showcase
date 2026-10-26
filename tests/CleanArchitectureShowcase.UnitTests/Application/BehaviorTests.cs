@@ -85,10 +85,7 @@ public sealed class BehaviorTests
             EventId eventId,
             TState state,
             Exception? exception,
-            Func<TState, Exception?, string> formatter)
-        {
-            Logs.Add((logLevel, formatter(state, exception)));
-        }
+            Func<TState, Exception?, string> formatter) => Logs.Add((logLevel, formatter(state, exception)));
     }
 
     [Fact]
@@ -96,7 +93,7 @@ public sealed class BehaviorTests
     {
         // Arrange
         var logger = new TestLogger<LoggingBehavior<TestRequest, Result>>();
-        var options = Options.Create(new LoggingBehaviorOptions
+        IOptions<LoggingBehaviorOptions> options = Options.Create(new LoggingBehaviorOptions
         {
             SlowRequestThresholdMilliseconds = 10 // artificially low for testing
         });

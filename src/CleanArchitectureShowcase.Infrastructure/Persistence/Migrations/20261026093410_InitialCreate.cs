@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -23,10 +23,7 @@ namespace CleanArchitectureShowcase.Infrastructure.Persistence.Migrations
                     CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
                     LastModifiedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_products", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_products", x => x.Id));
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_Name",

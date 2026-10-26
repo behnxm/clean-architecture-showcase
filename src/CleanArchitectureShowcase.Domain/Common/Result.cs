@@ -36,7 +36,10 @@ public class Result : IFailureResult<Result>
 
     public static Result<TValue> Failure<TValue>(Error error) => new(default, false, error);
 
-    public static implicit operator Result(Error error) => Failure(error);
+    public static implicit operator Result(Error error)
+    {
+        return Failure(error);
+    }
 }
 
 /// <summary>
@@ -62,8 +65,13 @@ public class Result<TValue> : Result, IFailureResult<Result<TValue>>
 
     public static new Result<TValue> Failure(Error error) => new(default, false, error);
 
-    public static implicit operator Result<TValue>(TValue? value) =>
-        value is not null ? Success(value) : Failure(Error.NullValue);
+    public static implicit operator Result<TValue>(TValue? value)
+    {
+        return value is not null ? Success(value) : Failure(Error.NullValue);
+    }
 
-    public static implicit operator Result<TValue>(Error error) => Failure(error);
+    public static implicit operator Result<TValue>(Error error)
+    {
+        return Failure(error);
+    }
 }

@@ -5,7 +5,7 @@ using CleanArchitectureShowcase.WebAPI.Middleware;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Scalar.AspNetCore;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Presentation and infrastructure services
 builder.Services.AddControllers();
@@ -23,17 +23,11 @@ string[] allowedOrigins = builder.Configuration
     .GetSection("Cors:AllowedOrigins")
     .Get<string[]>() ?? ["http://localhost:3000"];
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("Frontend", policy =>
-    {
-        policy.WithOrigins(allowedOrigins)
+builder.Services.AddCors(options => options.AddPolicy("Frontend", policy => policy.WithOrigins(allowedOrigins)
             .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
+            .AllowAnyMethod()));
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Pipeline middleware
 app.UseExceptionHandler();
@@ -42,15 +36,12 @@ app.UseStatusCodePages();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options.WithTitle("Clean Architecture Product Catalog API");
-    });
+    app.MapScalarApiReference(options => options.WithTitle("Clean Architecture Product Catalog API"));
 
     // In development, apply EF Core migrations and seed products
-    using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    using IServiceScope scope = app.Services.CreateScope();
+    ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     bool applyMigrations = builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true);
     await DbInitializer.InitializeAsync(dbContext, applyMigrations, logger);
 }

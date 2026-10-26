@@ -30,7 +30,7 @@ public static class ResultExtensions
         Error error = result.Error;
         string traceId = Activity.Current?.Id ?? httpContext.TraceIdentifier;
 
-        var (statusCode, title, type) = error.Type switch
+        (int statusCode, string? title, string? type) = error.Type switch
         {
             ErrorType.Validation => (
                 StatusCodes.Status400BadRequest,

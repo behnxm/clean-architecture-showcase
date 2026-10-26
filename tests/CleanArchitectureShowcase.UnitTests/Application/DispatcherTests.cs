@@ -13,18 +13,12 @@ public sealed class DispatcherTests
 
     private sealed class TestCommandHandler : ICommandHandler<TestCommand>
     {
-        public Task<Result> Handle(TestCommand command, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(Result.Success());
-        }
+        public Task<Result> Handle(TestCommand command, CancellationToken cancellationToken) => Task.FromResult(Result.Success());
     }
 
     private sealed class TestCommandWithResponseHandler : ICommandHandler<TestCommandWithResponse, int>
     {
-        public Task<Result<int>> Handle(TestCommandWithResponse command, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(Result.Success(command.Number * 2));
-        }
+        public Task<Result<int>> Handle(TestCommandWithResponse command, CancellationToken cancellationToken) => Task.FromResult(Result.Success(command.Number * 2));
     }
 
     [Fact]
@@ -125,11 +119,9 @@ public sealed class DispatcherTests
 
     private sealed class ShortCircuitBehavior : IPipelineBehavior<TestCommand, Result>
     {
-        public Task<Result> Handle(TestCommand request, RequestHandlerDelegate<Result> next, CancellationToken cancellationToken)
-        {
+        public Task<Result> Handle(TestCommand request, RequestHandlerDelegate<Result> next, CancellationToken cancellationToken) =>
             // Do NOT call next(); short circuit immediately with failure
-            return Task.FromResult<Result>(Error.Validation("ShortCircuit", "Terminated early"));
-        }
+            Task.FromResult<Result>(Error.Validation("ShortCircuit", "Terminated early"));
     }
 
     [Fact]

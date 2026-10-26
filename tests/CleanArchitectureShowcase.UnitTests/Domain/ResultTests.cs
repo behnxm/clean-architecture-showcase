@@ -10,7 +10,7 @@ public sealed class ResultTests
     public void Success_CreatesSuccessfulResult()
     {
         // Act
-        Result result = Result.Success();
+        var result = Result.Success();
 
         // Assert
         result.IsSuccess.ShouldBeTrue();
@@ -22,10 +22,10 @@ public sealed class ResultTests
     public void Failure_CreatesFailedResultWithError()
     {
         // Arrange
-        Error error = Error.NotFound("Item.NotFound", "The requested item does not exist.");
+        var error = Error.NotFound("Item.NotFound", "The requested item does not exist.");
 
         // Act
-        Result result = Result.Failure(error);
+        var result = Result.Failure(error);
 
         // Assert
         result.IsSuccess.ShouldBeFalse();
@@ -37,7 +37,7 @@ public sealed class ResultTests
     public void SuccessWithValue_ReturnsValue()
     {
         // Act
-        Result<string> result = Result.Success("hello world");
+        var result = Result.Success("hello world");
 
         // Assert
         result.IsSuccess.ShouldBeTrue();
@@ -48,8 +48,8 @@ public sealed class ResultTests
     public void FailureWithValue_AccessingValueThrowsInvalidOperationException()
     {
         // Arrange
-        Error error = Error.Failure("System.Error", "A failure occurred.");
-        Result<int> result = Result.Failure<int>(error);
+        var error = Error.Failure("System.Error", "A failure occurred.");
+        var result = Result.Failure<int>(error);
 
         // Assert
         result.IsFailure.ShouldBeTrue();
@@ -83,7 +83,7 @@ public sealed class ResultTests
     public void ImplicitConversion_FromError_ReturnsFailureResult()
     {
         // Arrange
-        Error error = Error.Validation("Input.Invalid", "Invalid input provided.");
+        var error = Error.Validation("Input.Invalid", "Invalid input provided.");
 
         // Act
         Result result = error;
@@ -100,8 +100,8 @@ public sealed class ResultTests
     public void ValidationError_EncapsulatesMultipleErrors()
     {
         // Arrange
-        Error error1 = Error.Validation("Field1", "Error 1");
-        Error error2 = Error.Validation("Field2", "Error 2");
+        var error1 = Error.Validation("Field1", "Error 1");
+        var error2 = Error.Validation("Field2", "Error 2");
 
         // Act
         var validationError = new ValidationError([error1, error2]);

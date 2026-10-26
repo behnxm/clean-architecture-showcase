@@ -40,23 +40,23 @@ public sealed class HealthAndOpenApiTests(CustomWebApplicationFactory factory) :
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         string content = await response.Content.ReadAsStringAsync();
-        JsonNode? doc = JsonNode.Parse(content);
+        var doc = JsonNode.Parse(content);
         doc.ShouldNotBeNull();
 
-        JsonObject? paths = doc["paths"] as JsonObject;
+        var paths = doc["paths"] as JsonObject;
         paths.ShouldNotBeNull();
         paths.Count.ShouldBeGreaterThan(0);
 
         var operationIds = new List<string>();
 
-        foreach (var path in paths)
+        foreach (KeyValuePair<string, JsonNode?> path in paths)
         {
             if (path.Value is not JsonObject methods)
             {
                 continue;
             }
 
-            foreach (var method in methods)
+            foreach (KeyValuePair<string, JsonNode?> method in methods)
             {
                 if (method.Value is JsonObject operation && operation.TryGetPropertyValue("operationId", out JsonNode? opIdNode))
                 {

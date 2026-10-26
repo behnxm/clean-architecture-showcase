@@ -70,15 +70,15 @@ internal sealed class Dispatcher(IServiceProvider serviceProvider) : IDispatcher
     {
         public override async Task<Result> Invoke(ICommand command, IServiceProvider sp, CancellationToken ct)
         {
-            var handler = sp.GetRequiredService<ICommandHandler<TCommand>>();
-            var behaviors = sp.GetServices<IPipelineBehavior<TCommand, Result>>().Reverse();
+            ICommandHandler<TCommand> handler = sp.GetRequiredService<ICommandHandler<TCommand>>();
+            IEnumerable<IPipelineBehavior<TCommand, Result>> behaviors = sp.GetServices<IPipelineBehavior<TCommand, Result>>().Reverse();
 
             RequestHandlerDelegate<Result> pipeline = () => handler.Handle((TCommand)command, ct);
 
-            foreach (var behavior in behaviors)
+            foreach (IPipelineBehavior<TCommand, Result>? behavior in behaviors)
             {
-                var next = pipeline;
-                var currentBehavior = behavior;
+                RequestHandlerDelegate<Result> next = pipeline;
+                IPipelineBehavior<TCommand, Result> currentBehavior = behavior;
                 pipeline = () => currentBehavior.Handle((TCommand)command, next, ct);
             }
 
@@ -96,15 +96,15 @@ internal sealed class Dispatcher(IServiceProvider serviceProvider) : IDispatcher
     {
         public override async Task<Result<TResponse>> Invoke(ICommand<TResponse> command, IServiceProvider sp, CancellationToken ct)
         {
-            var handler = sp.GetRequiredService<ICommandHandler<TCommand, TResponse>>();
-            var behaviors = sp.GetServices<IPipelineBehavior<TCommand, Result<TResponse>>>().Reverse();
+            ICommandHandler<TCommand, TResponse> handler = sp.GetRequiredService<ICommandHandler<TCommand, TResponse>>();
+            IEnumerable<IPipelineBehavior<TCommand, Result<TResponse>>> behaviors = sp.GetServices<IPipelineBehavior<TCommand, Result<TResponse>>>().Reverse();
 
             RequestHandlerDelegate<Result<TResponse>> pipeline = () => handler.Handle((TCommand)command, ct);
 
-            foreach (var behavior in behaviors)
+            foreach (IPipelineBehavior<TCommand, Result<TResponse>>? behavior in behaviors)
             {
-                var next = pipeline;
-                var currentBehavior = behavior;
+                RequestHandlerDelegate<Result<TResponse>> next = pipeline;
+                IPipelineBehavior<TCommand, Result<TResponse>> currentBehavior = behavior;
                 pipeline = () => currentBehavior.Handle((TCommand)command, next, ct);
             }
 
@@ -122,15 +122,15 @@ internal sealed class Dispatcher(IServiceProvider serviceProvider) : IDispatcher
     {
         public override async Task<Result<TResponse>> Invoke(IQuery<TResponse> query, IServiceProvider sp, CancellationToken ct)
         {
-            var handler = sp.GetRequiredService<IQueryHandler<TQuery, TResponse>>();
-            var behaviors = sp.GetServices<IPipelineBehavior<TQuery, Result<TResponse>>>().Reverse();
+            IQueryHandler<TQuery, TResponse> handler = sp.GetRequiredService<IQueryHandler<TQuery, TResponse>>();
+            IEnumerable<IPipelineBehavior<TQuery, Result<TResponse>>> behaviors = sp.GetServices<IPipelineBehavior<TQuery, Result<TResponse>>>().Reverse();
 
             RequestHandlerDelegate<Result<TResponse>> pipeline = () => handler.Handle((TQuery)query, ct);
 
-            foreach (var behavior in behaviors)
+            foreach (IPipelineBehavior<TQuery, Result<TResponse>>? behavior in behaviors)
             {
-                var next = pipeline;
-                var currentBehavior = behavior;
+                RequestHandlerDelegate<Result<TResponse>> next = pipeline;
+                IPipelineBehavior<TQuery, Result<TResponse>> currentBehavior = behavior;
                 pipeline = () => currentBehavior.Handle((TQuery)query, next, ct);
             }
 

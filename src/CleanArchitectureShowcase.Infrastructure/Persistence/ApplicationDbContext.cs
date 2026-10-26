@@ -1,6 +1,8 @@
+using System.Reflection;
 using CleanArchitectureShowcase.Domain.Abstractions;
 using CleanArchitectureShowcase.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CleanArchitectureShowcase.Infrastructure.Persistence;
 
@@ -26,12 +28,12 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         // numeric comparisons and ordering, while retaining decimal precision at the domain entity boundary.
         if (Database.IsSqlite())
         {
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
             {
-                var decimalProperties = entityType.ClrType.GetProperties()
+                IEnumerable<PropertyInfo> decimalProperties = entityType.ClrType.GetProperties()
                     .Where(p => p.PropertyType == typeof(decimal) || p.PropertyType == typeof(decimal?));
 
-                foreach (var property in decimalProperties)
+                foreach (PropertyInfo? property in decimalProperties)
                 {
                     modelBuilder.Entity(entityType.ClrType)
                         .Property(property.Name)

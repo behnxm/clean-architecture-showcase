@@ -1,0 +1,87 @@
+@host = http://localhost:5000
+
+### 1. Health - Liveness
+GET {{host}}/health
+Accept: application/json
+
+### 2. Health - Readiness (Database connectivity check)
+GET {{host}}/health/ready
+Accept: application/json
+
+### 3. OpenAPI v1 Document
+GET {{host}}/openapi/v1.json
+Accept: application/json
+
+### 4. Create Product (201 Created)
+# @name createProduct
+POST {{host}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Mechanical Split Keyboard",
+  "description": "Ergonomic split layout keyboard with hot-swappable tactile switches and per-key RGB.",
+  "price": 189.99,
+  "stock": 40
+}
+
+### Store the created product ID
+@productId = {{createProduct.response.body.$}}
+
+### 5. Get Product By ID (200 OK)
+GET {{host}}/api/v1/products/{{productId}}
+Accept: application/json
+
+### 6. Get Products List (Paginated, Sorted by Price Descending)
+GET {{host}}/api/v1/products?page=1&pageSize=10&sortBy=price&sortDirection=desc
+Accept: application/json
+
+### 7. Search Products by Term
+GET {{host}}/api/v1/products?search=Keyboard&page=1&pageSize=10
+Accept: application/json
+
+### 8. Update Product (200 OK)
+PUT {{host}}/api/v1/products/{{productId}}
+Content-Type: application/json
+
+{
+  "name": "Mechanical Split Keyboard v2",
+  "description": "Updated ergonomic split layout keyboard with Bluetooth 5.3 and PBT keycaps.",
+  "price": 199.99
+}
+
+### 9. Adjust Product Stock (200 OK)
+PATCH {{host}}/api/v1/products/{{productId}}/stock
+Content-Type: application/json
+
+{
+  "delta": 15
+}
+
+### 10. Delete Product (204 No Content)
+DELETE {{host}}/api/v1/products/{{productId}}
+
+### 11. Verify Deleted Product Returns 404 Not Found
+GET {{host}}/api/v1/products/{{productId}}
+Accept: application/json
+
+### 12. Negative Case: Validation Failure (400 Bad Request with ProblemDetails)
+POST {{host}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "Valid description",
+  "price": -10.00,
+  "stock": -1
+}
+
+### 13. Negative Case: Conflict / Duplicate Name (409 Conflict)
+POST {{host}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Mechanical Gaming Keyboard",
+  "description": "Conflicting title with seeded record.",
+  "price": 99.99,
+  "stock": 10
+}

@@ -79,7 +79,7 @@ public sealed class ProductsCrudTests(CustomWebApplicationFactory factory) : ICl
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
         string content = await response.Content.ReadAsStringAsync();
-        JsonNode? json = JsonNode.Parse(content);
+        var json = JsonNode.Parse(content);
         json.ShouldNotBeNull();
 
         json["status"]?.GetValue<int>().ShouldBe(400);
@@ -111,7 +111,7 @@ public sealed class ProductsCrudTests(CustomWebApplicationFactory factory) : ICl
         response2.StatusCode.ShouldBe(HttpStatusCode.Conflict);
 
         string content = await response2.Content.ReadAsStringAsync();
-        JsonNode? json = JsonNode.Parse(content);
+        var json = JsonNode.Parse(content);
         json.ShouldNotBeNull();
 
         json["status"]?.GetValue<int>().ShouldBe(409);
@@ -123,7 +123,7 @@ public sealed class ProductsCrudTests(CustomWebApplicationFactory factory) : ICl
     public async Task GetProductById_WhenNotFound_Returns404ProblemDetails()
     {
         // Arrange
-        Guid nonExistentId = Guid.NewGuid();
+        var nonExistentId = Guid.NewGuid();
 
         // Act
         HttpResponseMessage response = await _client.GetAsync($"api/v1/products/{nonExistentId}");
@@ -132,7 +132,7 @@ public sealed class ProductsCrudTests(CustomWebApplicationFactory factory) : ICl
         response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 
         string content = await response.Content.ReadAsStringAsync();
-        JsonNode? json = JsonNode.Parse(content);
+        var json = JsonNode.Parse(content);
         json.ShouldNotBeNull();
 
         json["status"]?.GetValue<int>().ShouldBe(404);
@@ -156,7 +156,7 @@ public sealed class ProductsCrudTests(CustomWebApplicationFactory factory) : ICl
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
         string content = await response.Content.ReadAsStringAsync();
-        JsonNode? json = JsonNode.Parse(content);
+        var json = JsonNode.Parse(content);
         json.ShouldNotBeNull();
 
         json["status"]?.GetValue<int>().ShouldBe(400);

@@ -92,7 +92,7 @@ public sealed class CommandHandlerTests
     {
         // Arrange
         var handler = new UpdateProductCommandHandler(_productRepository, _unitOfWork);
-        Guid missingId = Guid.NewGuid();
+        var missingId = Guid.NewGuid();
         var command = new UpdateProductCommand(missingId, "New Name", "New Desc", 35m);
 
         _productRepository.GetByIdAsync(missingId, Arg.Any<CancellationToken>())
@@ -157,7 +157,7 @@ public sealed class CommandHandlerTests
     {
         // Arrange
         var handler = new DeleteProductCommandHandler(_productRepository, _unitOfWork);
-        Guid missingId = Guid.NewGuid();
+        var missingId = Guid.NewGuid();
         var command = new DeleteProductCommand(missingId);
 
         _productRepository.GetByIdAsync(missingId, Arg.Any<CancellationToken>())

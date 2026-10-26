@@ -19,10 +19,7 @@ public sealed class AuditableEntityInterceptorTests : IDisposable
         _connection.Open();
     }
 
-    public void Dispose()
-    {
-        _connection.Dispose();
-    }
+    public void Dispose() => _connection.Dispose();
 
     [Fact]
     public async Task AuditableEntityInterceptor_SetsCreatedAtAndLastModifiedAtViaTimeProvider()
@@ -32,7 +29,7 @@ public sealed class AuditableEntityInterceptorTests : IDisposable
         var fakeTimeProvider = new FakeTimeProvider(initialTime);
         var interceptor = new AuditableEntityInterceptor(fakeTimeProvider);
 
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseSqlite(_connection)
             .AddInterceptors(interceptor)
             .Options;
@@ -41,7 +38,7 @@ public sealed class AuditableEntityInterceptorTests : IDisposable
         {
             await context.Database.EnsureCreatedAsync();
 
-            var product = Product.Create("Audit Test Product", "Desc", 99m, 10).Value;
+            Product product = Product.Create("Audit Test Product", "Desc", 99m, 10).Value;
             await context.Products.AddAsync(product);
             await context.SaveChangesAsync();
 

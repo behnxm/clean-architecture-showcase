@@ -1,6 +1,7 @@
 using CleanArchitectureShowcase.Application.Abstractions;
 using CleanArchitectureShowcase.Application.Common.Models;
 using CleanArchitectureShowcase.Application.Features.Products.Contracts;
+using CleanArchitectureShowcase.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitectureShowcase.Infrastructure.Persistence.Repositories;
@@ -34,7 +35,7 @@ public sealed class ProductReadRepository(ApplicationDbContext context) : IProdu
     {
         ArgumentNullException.ThrowIfNull(criteria);
 
-        var query = context.Products.AsNoTracking();
+        IQueryable<Product> query = context.Products.AsNoTracking();
 
         if (!string.IsNullOrWhiteSpace(criteria.SearchTerm))
         {

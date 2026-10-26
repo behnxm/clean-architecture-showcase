@@ -40,8 +40,8 @@ internal sealed class DomainEventDispatcher(IServiceProvider serviceProvider) : 
     {
         public override async Task Invoke(IDomainEvent domainEvent, IServiceProvider sp, CancellationToken ct)
         {
-            var handlers = sp.GetServices<IDomainEventHandler<TEvent>>();
-            foreach (var handler in handlers)
+            IEnumerable<IDomainEventHandler<TEvent>> handlers = sp.GetServices<IDomainEventHandler<TEvent>>();
+            foreach (IDomainEventHandler<TEvent> handler in handlers)
             {
                 await handler.Handle((TEvent)domainEvent, ct);
             }
