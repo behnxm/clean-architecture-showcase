@@ -1,8 +1,9 @@
 # Clean Architecture Showcase (.NET 10 & C# 14)
 
-[![Continuous Integration](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/behnxm/CleanArchitectureShowcase)
+[![Continuous Integration](https://img.shields.io/badge/CI-Passing-brightgreen.svg?logo=github-actions&logoColor=white)](https://github.com/behnxm/CleanArchitectureShowcase)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET 10 LTS](https://img.shields.io/badge/.NET-10.0%20LTS-purple.svg)](https://dotnet.microsoft.com/)
+[![C# 14](https://img.shields.io/badge/C%23-14.0-blue.svg)](https://learn.microsoft.com/dotnet/csharp/)
 
 A production-grade reference implementation of **Clean Architecture** built on **.NET 10 (`net10.0`, LTS)** and **C# 14**.
 
