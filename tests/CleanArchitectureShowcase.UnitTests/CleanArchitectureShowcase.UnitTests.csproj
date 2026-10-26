@@ -2,6 +2,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
+    <!--
+      CA1707: Allow underscores in test method names (Given_When_Then convention).
+      xUnit1051: TestContext.Current.CancellationToken recommendation in xUnit v3.
+      CS1718: Comparison to same variable in equality operator tests.
+    -->
+    <NoWarn>$(NoWarn);CA1707;xUnit1051;CS1718;CA2263</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
