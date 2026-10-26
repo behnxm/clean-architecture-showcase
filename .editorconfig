@@ -64,3 +64,10 @@ dotnet_naming_style.private_field_style.required_prefix = _
 dotnet_analyzer_diagnostic.severity = warning
 dotnet_diagnostic.IDE0005.severity = suggestion
 
+# EF Core Migrations (tool-generated)
+[**/Migrations/**.cs]
+csharp_style_namespace_declarations = file_scoped:silent
+dotnet_diagnostic.IDE0161.severity = none
+
+
+
